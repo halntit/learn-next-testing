@@ -43,6 +43,7 @@
     "@testing-library/jest-dom": "5.16.1",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
+    "@types/jest": "^29.5.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pbkdf2": "^3.1.0",
     "@types/react": "17.0.38",
