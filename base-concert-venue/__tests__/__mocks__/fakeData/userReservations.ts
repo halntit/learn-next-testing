@@ -1,5 +1,6 @@
 import { ReservationWithShow } from "@/lib/features/reservations/types";
 
+// because this one is not getable from the db
 export const fakeUserReservations: Array<ReservationWithShow> = [
   {
     id: 1,

@@ -10,7 +10,7 @@
     "testing-library",
     "jest-dom",
     "jsx-a11y",
-    "simple-import-sort",
+    // "simple-import-sort",
     "prettier",
     "react-hooks",
     "@typescript-eslint"
@@ -41,7 +41,7 @@
     "import/prefer-default-export": 0,
     "import/no-anonymous-default-export": 0,
     "import/no-unresolved": 1,
-    "sort-imports": "off",
+    // "sort-imports": "off",
     "import/order": "off",
     "no-shadow": "off",
     "no-use-before-define": "off",
@@ -60,17 +60,18 @@
       "warn",
       {
         "printWidth": 80,
+        "tabWidth": 4,
         "singleQuote": false,
         "endOfLine": "auto"
       }
     ],
-    "simple-import-sort/exports": "error",
-    "simple-import-sort/imports": [
-      "warn",
-      {
-        "groups": [["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
-      }
-    ]
+    // "simple-import-sort/exports": "error",
+    // "simple-import-sort/imports": [
+    //   "warn",
+    //   {
+    //     "groups": [["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
+    //   }
+    // ]
   },
   "overrides": [
     // Only use Testing Library lint rules in jest test files

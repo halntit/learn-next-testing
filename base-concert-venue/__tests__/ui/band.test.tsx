@@ -15,7 +15,7 @@ test("band component display correct band information", async () => {
 });
 
 test("band component display error", async () => {
-    render(<BandComponent error={"Error occurred"} band={null} />);
+    render(<BandComponent error={ "Error occurred" } band={null} />);
 
     const error = screen.getByRole("heading", {
         name: /error occurred/i,
