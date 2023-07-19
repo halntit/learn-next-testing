@@ -37,3 +37,22 @@ For unit testing, it's generally not necessary or desirable to interact with a r
 However, this doesn't mean that you should never test your code with a real database. This type of testing (which involves testing the interaction between different parts of your system, such as your code and a database) is usually done during integration testing, not unit testing.
 
 So, while your unit tests likely don't need to interact with a real database, your integration tests probably should. It's important to have a good balance of unit tests (for testing individual components) and integration tests (for testing how those components interact).
+
+## Test Database
+
+- Why need test Database?
+  - Need reliable data for tests
+  - Do not want to rely on dev or prod db (they are not predictable)
+  - Should not alter data on dev or Prod db
+- Why not mock API response?
+  - Not all data comes from API (SSG / SSR / ISR)
+  - Can't test mutations (updates to DB)
+  - Can't update DB during test
+    - for ISR / SWR refresh
+- How?
+  - Create a new dedicated test database (might be on cloud or local)
+  - Simultaneous test runs use different DBs
+  - Add test data
+  - **Create DB**: Start of test run
+  - Reset DB: in between tests
+  - Delete DB: End of test run
