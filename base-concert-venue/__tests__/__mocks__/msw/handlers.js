@@ -4,12 +4,18 @@ import { fakeUserReservations } from "@/__tests__/__mocks__/fakeData/userReserva
 
 export const handlers = [
     rest.get("http://localhost:3000/api/shows/:showId", async (req, res, ctx) => {
+        const { showId } = req.params;
         const { fakeShows } = await readFakeData();
-        return res(ctx.json({ show: fakeShows[0] }));
+        return res(ctx.json({ show: fakeShows[Number(showId)] }));
     }),
 
     rest.get("http://localhost:3000/api/users/:userId/reservations", async (req, res, ctx) => {
-        // note: implicit return here
-        return res(ctx.json({ userReservations: fakeUserReservations }));
+        const { userId } = req.params;
+        if (userId === "0") { // user without any reservations
+            return res(ctx.json([]));
+        } else {
+            // note: implicit return here
+            return res(ctx.json({ userReservations: fakeUserReservations }));
+        }
     })
 ];
