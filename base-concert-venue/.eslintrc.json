@@ -41,7 +41,6 @@
     "import/prefer-default-export": 0,
     "import/no-anonymous-default-export": 0,
     "import/no-unresolved": 1,
-    // "sort-imports": "off",
     "import/order": "off",
     "no-shadow": "off",
     "no-use-before-define": "off",
@@ -64,7 +63,7 @@
         "singleQuote": false,
         "endOfLine": "auto"
       }
-    ],
+    ]
     // "simple-import-sort/exports": "error",
     // "simple-import-sort/imports": [
     //   "warn",
