@@ -17,3 +17,7 @@ it("displays correct heading when navigating to bands", () => {
         name: /Our Illustrious Performers/i
     }).should('exist');
 });
+
+it ("reset the DB", () => {
+    cy.task("db:reset");
+});
