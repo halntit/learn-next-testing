@@ -56,3 +56,9 @@ So, while your unit tests likely don't need to interact with a real database, yo
   - **Create DB**: Start of test run
   - Reset DB: in between tests
   - Delete DB: End of test run
+
+## Testing dynamic Routes - What to test?
+  - routes that were available when server was built
+  - routes that were not available when server was build:
+    - routes that never existed (band ID does not exist)
+    - routes that were added after the build
