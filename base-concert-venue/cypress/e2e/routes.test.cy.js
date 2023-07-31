@@ -1,3 +1,6 @@
+import { generateNewBand } from "../../__tests__/__mocks__/fakeData/newBand";
+import { generateRandomId } from "../../lib/features/reservations/utils";
+
 it("displays correct heading when navigating to shows", () => {
     cy.visit("/"); // visit base-concert-venue
     cy.findByRole("button", {
@@ -18,6 +21,19 @@ it("displays correct heading when navigating to bands", () => {
     }).should('exist');
 });
 
-it ("reset the DB", () => {
-    cy.task("db:reset");
+it("display correct band name for band existed at build time", () => {
+    cy.task("db:reset").visit("/bands/1");
+    cy.findByRole("heading", { name: /shamrock pete/i }).should('exist');
+});
+
+it("display error message for band not existed", () => {
+    cy.task("db:reset").visit("/bands/5");
+    cy.findByRole("heading", { name: /error: band not found/i }).should('exist');
+});
+
+it("display correct band name for band added after build time", () => {
+    const bandId = generateRandomId();
+    const newBand = generateNewBand(bandId);
+    cy.task("db:reset").task("addBand", newBand).visit(`/bands/${bandId}`);
+    cy.findByRole("heading", { name: /avalanche of cheese/i }).should('exist');
 });
