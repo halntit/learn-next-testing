@@ -62,3 +62,6 @@ So, while your unit tests likely don't need to interact with a real database, yo
   - routes that were not available when server was build:
     - routes that never existed (band ID does not exist)
     - routes that were added after the build
+
+## ISR (Increamental static regeneration)
+  - Note: when running locally with ```next dev```, ```**getStaticProps**``` is invoked on every request. To verify your on-demand ISR configuration is correct, you will need to create a production build and start the production server.
