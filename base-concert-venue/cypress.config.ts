@@ -5,6 +5,9 @@ import { resetDB } from "./__tests__/__mocks__/db/util/reset-db";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
+      config.env.REVALIDATION_SECRET = process.env.REVALIDATION_SECRET;
+      // to access within a test function:
+      //   Cypress.env("REVALIDATION_SECRET");
       on('task', {
         "db:reset": () => {
           resetDB().then(() => null);
@@ -12,7 +15,9 @@ export default defineConfig({
           return null;
         },
         addBand: (newBand) => addBand(newBand).then(() => null)
-      })
+      });
+
+      return config;
     },
   },
 
