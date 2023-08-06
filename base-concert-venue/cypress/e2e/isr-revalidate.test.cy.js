@@ -20,4 +20,7 @@ it("should load refreshed from cache after new band is added", () => {
     // reload the page; the band name should be on the page
     cy.reload();
     cy.findByRole("heading", { name: /avalanche of cheese/i }).should("exist");
+
+    // clear isr cache to initial db conditions
+    cy.resetDBAndClearISRCache();
 });
