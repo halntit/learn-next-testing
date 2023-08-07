@@ -17,4 +17,6 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
     await res.unstable_revalidate("/bands");
 
     return res.status(200).json({ revalidated: true });
-})
+});
+
+export default handler;
