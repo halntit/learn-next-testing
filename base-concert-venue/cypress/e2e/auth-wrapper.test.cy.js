@@ -73,4 +73,21 @@ describe("Auth wrapper", () => {
         });
     });
 
+    it("does not show sign-in button when not logged in", () => {
+        cy.task("db:reset").signIn(Cypress.env("TEST_USER_EMAIL"), Cypress.env("TEST_PASSWORD"));
+
+        // access tickets page for first show
+        cy.visit("/reservations/0");
+
+        // make sure there is no sign-in button
+        cy.findByRole("button", {
+            name: /sign in/i
+        }).should('not.exist');
+
+        // make sure ticket purchase buttons shows
+        cy.findByRole("button", {
+            name: /purchase/i
+        }).should("exist");
+    });
+
 });
