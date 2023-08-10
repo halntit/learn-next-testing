@@ -1,65 +1,76 @@
+describe("Auth wrapper", () => {
+    it("runs auth flow for failed then succesfully login",  () => {
+        // visit protected page
+        cy.task("db:reset").visit("/user");
 
+        // check that login form is displayed
+        cy.findByRole("heading", {
+            name: /sign in to your account/i
+        }).should('exist');
 
-it("runs auth flow for failed then succesfully login", async () => {
-    // visit protected page
-    cy.task("db:reset").visit("/user");
+        // check that there's no welcome message
+        cy.findByRole("heading", {
+            name: /welcome/i
+        }).should('not.exist');
 
-    // check that login form is displayed
-    cy.findByRole("heading", {
-        name: /sign in to your account/i
-    }).should('exist');
+        // sign in with invalid credentials
+        cy.findByLabelText(/email address/i)
+            .clear()
+            .type(Cypress.env("TEST_USER_EMAIL"));
+        cy.findByLabelText(/password/i)
+            .clear()
+            .type("not real pwd");
 
-    // check that there's no welcome message
-    cy.findByRole("heading", {
-        name: /welcome/i
-    }).should('not.exist');
+        // submit the form
+        cy.findByRole("main").within(() => {
+            cy.findByRole("button", {
+                name: /sign in/i
+            }).click();
+        });
 
-    // sign in with invalid credentials
-    cy.findByLabelText(/email address/i)
-        .clear()
-        .type(Cypress.env("TEST_USER_EMAIL"));
-    cy.findByLabelText(/password/i)
-        .clear()
-        .type("not real pwd");
+        // failure message
+        cy.findByText(/sign in failed/i).should('exist');
 
-    // submit the form
-    cy.findByRole("main").within(() => {
+        // retry with real pws
+        cy.findByLabelText(/password/i)
+            .clear()
+            .type(Cypress.env("TEST_PASSWORD"));
+
+        // submit the form
+        cy.findByRole("main").within(() => {
+            cy.findByRole("button", {
+                name: /sign in/i
+            }).click();
+        });
+
+        // check for purchase button and band name
         cy.findByRole("button", {
-            name: /sign in/i
-        }).click();
+            name: /purchase/i
+        }).should('exist');
+        cy.findByRole("heading", {
+            name: /the wandering bunnies/i
+        }).should('exist');
+
+        // check that welcome message, email and sign-out button are displayed
+        cy.findByRole("heading", {
+            name: /welcome/i
+        }).should('exist');
+        cy.findByRole("button", {
+            name: Cypress.env("TEST_USER_EMAIL")
+        }).should('exist');
+        cy.findByRole("button", {
+            name: /sign out/i
+        }).should("exist");
     });
 
-    // failure message
-    cy.findByText(/sign in failed/i).should('exist');
-
-    // retry with real pws
-    cy.findByLabelText(/password/i)
-        .clear()
-        .type(Cypress.env("TEST_PASSWORD"));
-
-    // submit the form
-    cy.findByRole("main").within(() => {
-        cy.findByRole("button", {
-            name: /sign in/i
-        }).click();
+    it("runs from protected pages from JSON files", () => {
+        cy.fixture("protected-pages.json").then((pages) => {
+            pages.forEach((page) => {
+                cy.visit(page);
+                cy.findByLabelText(/email address/i).should('exist');
+                cy.findByLabelText(/password/i).should('exist');
+            })
+        });
     });
 
-    // check for purchase button and band name
-    cy.findByRole("button", {
-        name: /purchase/i
-    }).should('exist');
-    cy.findByRole("heading", {
-        name: /the wandering bunnies/i
-    }).should('exist');
-
-    // check that welcome message, email and sign-out button are displayed
-    cy.findByRole("heading", () => {
-        name: /welcome/i
-    }).should('exist');
-    cy.findByRole("button", {
-        name: Cypress.env("TEST_USER_EMAIL")
-    }).should('exist');
-    cy.findByRole("button", {
-        name: /sign out/i
-    }).should('exist');
 });
