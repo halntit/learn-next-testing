@@ -17,7 +17,7 @@ const customJestConfig = {
   },
   testEnvironment: "jest-environment-jsdom",
   collectCoverage: true,
-  coverageReporters: ["text", "lcov"],
+  coverageReporters: [/*"tex", */"lcov"],
   watchPathIgnorePatterns: ["<rootDir>/__tests__/__mocks__/db/.*\\.json"],
 };
 
