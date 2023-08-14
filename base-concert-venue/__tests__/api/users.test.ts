@@ -46,4 +46,22 @@ describe('test for users', () => {
             }
         });
     });
+
+    it('GET faulty userId"s reservations and return 0', async () => {
+        await testApiHandler({
+            handler: userReservationHandler,
+            paramsPatcher: (params) => {
+                params.userId = 11111;
+            },
+            test: async ({ fetch }) => {
+                const res = await fetch({
+                    method: 'GET'
+                });
+                expect(res.status).toBe(200);
+
+                const json = await res.json();
+                expect(json.userReservations).toHaveLength(0);
+            }
+        })
+    });
 });
