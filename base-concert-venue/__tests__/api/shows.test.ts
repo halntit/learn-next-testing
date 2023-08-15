@@ -34,4 +34,19 @@ describe('test for shows', () =>{
             }
         });
     });
+
+    it("POST /api/shows create a new show", async () => {
+        await testApiHandler({
+            handler: showsHandler,
+            paramsPatcher: (params) => {
+                params.queryStringURLParams = { secret: "NOT_SECRET" };
+            },
+            test: async ({ fetch }) => {
+                const res = await fetch({ 
+                    method: 'POST',
+                });
+                expect(res.status).toBe(401);
+            }
+        });
+    });
 });
